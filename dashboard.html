@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Panel Administrativo - KAEL</title>
+    <!-- CSS y JS de Leaflet -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <!-- Favicon principal -->
+    <link rel="icon" type="image/png" href="/static/logo.png">
+    
+    <!-- (Opcional) Para dispositivos Apple / alta resolución -->
+    <link rel="apple-touch-icon" href="/static/logo.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background: #f4f6f9; margin: 0; padding: 20px; }
+        .container { max-width: 1000px; margin: 0 auto; }
+        .card { background: white; padding: 25px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin-bottom: 20px; }
+        .hidden { display: none; }
+        input, button { width: 100%; padding: 12px; margin: 8px 0; border: 1px solid #ccc; border-radius: 5px; }
+        button { background: #007bff; color: white; border: none; font-weight: bold; cursor: pointer; }
+        button:hover { background: #0056b3; }
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+        th { background: #007bff; color: white; }
+        tr:hover { background: #f1f1f1; cursor: pointer; }
+        .header { display: flex; justify-content: space-between; align-items: center; }
+        .btn-logout { background: #dc3545; width: auto; padding: 8px 15px; }
+        .back-btn { background: #6c757d; width: auto; padding: 8px 15px; margin-bottom: 10px; }
+        
+        /* Centrado general en pantalla */
+        body {
+            background-color: #f1f3f7;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        @media (max-width: 480px) {
+            .login-card {
+                width: 95%;
+                padding: 1.25rem;
+            }
+            .header-container {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+        }
+
+        .login-card {
+            width: 90%;
+            max-width: 420px;
+            margin: 1.5rem auto;
+            padding: 1.5rem;
+            box-sizing: border-box;
+        }
+
+        /* Tarjeta contenedora compacta */
+        .card-login {
+            background: #ffffff;
+            width: 100%;
+            max-width: 340px;
+            padding: 24px 24px 20px 24px;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+            box-sizing: border-box;
+        }
+        
+        .inline-flex { display:inline-flex; }
+        .items-center { align-items:center; }
+        .gap-12 { gap: 12px; }
+        .text-caption { font-size: 0.75rem; }
+
+        .login-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+        .brand { display: flex; align-items: center; }
+        .rounded-md { border-radius: 6px; }
+
+        .brand-logo { height: 48px; width: 120px; max-width: 100%; display: block; object-fit: contain; }
+        .panel-tag { font-size: 0.65rem; font-weight: 600; color: #94a3b8; letter-spacing: 0.5px; }
+
+        .card-login h2 { margin: 0 0 6px 0; font-size: 1.15rem; font-weight: 600; color: #0f172a; }
+        .login-description { margin: 0 0 16px 0; font-size: 0.75rem; line-height: 1.35; color: #64748b; }
+
+        .form-group { display: flex; flex-direction: column; gap: 4px; margin-bottom: 12px; }
+        .form-group label { font-size: 0.75rem; font-weight: 500; color: #1e293b; }
+        .form-group input { width: 100%; padding: 8px 10px; font-size: 0.825rem; border: 1px solid transparent; border-radius: 6px; background-color: #f1f5f9; color: #0f172a; outline: none; box-sizing: border-box; }
+        .form-group input:focus { background-color: #ffffff; border-color: #0066ff; }
+
+        .btn-primary { width: 100%; padding: 8px 12px; background-color: #0066ff; color: #ffffff; border: none; border-radius: 6px; font-size: 0.825rem; font-weight: 600; cursor: pointer; margin-top: 4px; }
+        .btn-primary:hover { background-color: #0052cc; }
+
+        .login-footer { margin-top: 14px; }
+        .forgot-password { color: #0f172a; font-size: 0.75rem; font-weight: 600; text-decoration: none; }
+        .forgot-password:hover { text-decoration: underline; }
+
+        .error-message { color: #dc2626; font-size: 0.75rem; margin-top: 8px; display: none; text-align: center; }
+
+        /* --- ESTILOS EXCLUSIVOS PARA SUPERADMIN --- */
+        .superadmin-only {
+            display: none !important;
+        }
+
+        body.is-superadmin .superadmin-only.btn-container {
+            display: flex !important;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        body.is-superadmin th.superadmin-only,
+        body.is-superadmin td.superadmin-only {
+            display: table-cell !important;
+        }
+
+        /* --- ESTILOS PARA VENTANAS MODALES --- */
+        .modal-overlay {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6); z-index: 1000; justify-content: center; align-items: center;
+        }
+        .modal-content {
+            background: white; padding: 25px; border-radius: 8px; width: 90%; max-width: 450px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        .modal-content h3 { margin-top: 0; color: #0f172a; }
+        .btn-cancel { background: #64748b; margin-top: 10px; width: 100%; }
+        .btn-cancel:hover { background: #475569; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <!-- FORMULARIO DE LOGIN TARJETA COMPACTA -->
+    <div id="section-login" class="card-login">
+        <!-- Encabezado con el logo de KAEL -->
+        <div class="brand">
+            <a class="inline-flex items-center gap-12 rounded-md" href="/">
+                <img alt="KAEL" width="120" height="48" decoding="async" src="static/logo.svg" style="color: transparent;">
+                <span class="text-caption tracking-eyebrow uppercase">Panel Administrativo</span>
+            </a>
+        </div>
+
+        <h2>Entrar al panel</h2>
+        <p class="login-description">
+            Acceso solo para el equipo de ADMINISTRADORES. Aquí se gestionan datos de los conjuntos, sus maquinas y su recaudo.
+        </p>
+
+        <div class="form-group">
+            <label for="email">Correo</label>
+            <input type="email" id="email" required autocomplete="email">
+        </div>
+
+        <div class="form-group">
+            <label for="password">Contraseña</label>
+            <input type="password" id="password" required autocomplete="current-password">
+        </div>
+
+        <button type="button" class="btn-primary" onclick="ejecutarLogin()">Entrar &rarr;</button>
+
+        <p id="error-login" class="error-message">Credenciales incorrectas</p>
+    </div>
+
+    <!-- PANEL PRINCIPAL (DASHBOARD) -->
+    <div id="section-dashboard" class="card hidden">
+        <div class="header">
+            <div>
+                <h2 id="user-title">Bienvenido</h2>
+                <span id="user-role" style="font-weight: bold; color: #555;"></span>
+            </div>
+            <button class="btn-logout" onclick="cerrarSesion()">Cerrar Sesión</button>
+        </div>
+        <hr>
+
+        <!-- VISTA 1: LISTA DE CONJUNTOS -->
+        <div id="vista-conjuntos">
+            <h3>Seleccione un Conjunto</h3>
+            
+            <!-- CONTROLES SUPERADMIN (A y B) -->
+            <div class="superadmin-only btn-container">
+                <button style="background: #28a745; width: auto; padding: 8px 15px;" onclick="abrirModalConjunto()">+ Agregar Conjunto</button>
+                <button style="background: #17a2b8; width: auto; padding: 8px 15px;" onclick="abrirModal('modal-usuario')">+ Agregar Usuario</button>
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Conjunto</th>
+                        <th>Propietario</th>
+                        <th>Descripción</th>
+                        <th>Recaudo Total ($)</th>
+                        <th>Recaudo Admin ($)</th>
+                        <th>Recaudo Kael ($)</th>
+                    </tr>
+                </thead>
+                <tbody id="tabla-conjuntos"></tbody>
+            </table>
+        </div>
+
+        <!-- VISTA 2: MÁQUINAS DEL CONJUNTO SELECCIONADO -->
+        <div id="vista-maquinas" class="hidden">
+            <button class="back-btn" onclick="volverAConjuntos()">← Volver a Conjuntos</button>
+            <h3 id="titulo-conjunto-detalles">Máquinas en el Conjunto</h3>
+
+            <!-- CONTROLES SUPERADMIN (C) -->
+            <div class="superadmin-only btn-container">
+                <button style="background: #ffc107; color: #000; width: auto; padding: 8px 15px;" onclick="abrirModal('modal-maquina')">+ Agregar Máquina</button>
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID Máquina</th>
+                        <th>Ubicación</th>
+                        <th>Estado</th>
+                        <th>Transacciones</th>
+                        <th>Recaudo Total ($)</th>
+                        <th>Recaudo Admin ($)</th>
+                        <th>Recaudo Kael ($)</th>
+                        <th class="superadmin-only">Acciones</th> <!-- D. Cabecera Desactivar -->
+                    </tr>
+                </thead>
+                <tbody id="tabla-maquinas"></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- ========================================== -->
+<!-- MODALES DE FORMULARIOS PARA SUPERADMIN -->
+<!-- ========================================== -->
+
+<!-- MODAL: AGREGAR USUARIO -->
+<div id="modal-usuario" class="modal-overlay">
+    <div class="modal-content">
+        <h3>Agregar Nuevo Usuario</h3>
+        <form id="form-usuario" onsubmit="enviarUsuario(event)">
+            <input type="text" id="nuevo-nombre" placeholder="Nombre completo" required>
+            <input type="email" id="nuevo-email" placeholder="Correo electrónico" required>
+            <input type="password" id="nuevo-password" placeholder="Contraseña" required>
+            <input type="text" id="nuevo-telefono" placeholder="Teléfono (Opcional)">
+            <select id="nuevo-rol" style="width:100%; padding:12px; margin:8px 0; border:1px solid #ccc; border-radius:5px;">
+                <option value="cliente">Cliente (Dueño de conjunto)</option>
+                <option value="auxiliar">Auxiliar Operativo</option>
+                <option value="superadmin">Administrador Global</option>
+            </select>
+            <button type="submit" class="btn-primary">Guardar Usuario</button>
+            <button type="button" class="btn-cancel" onclick="cerrarModal('modal-usuario')">Cancelar</button>
+        </form>
+    </div>
+</div>
+
+<!-- MODAL: AGREGAR CONJUNTO -->
+<!-- MODAL: AGREGAR CONJUNTO -->
+<div id="modal-conjunto" class="modal-overlay">
+    <div class="modal-content" style="max-width: 550px;">
+        <h3>Agregar Conjunto</h3>
+        <form id="form-conjunto" onsubmit="enviarConjunto(event)">
+            <input type="text" id="conj-nombre" placeholder="Nombre del Conjunto" required>
+            
+            <!-- Contenedor del Mapa -->
+            <label style="font-size: 11px; color: #64748b;">Haz clic en el mapa para fijar la ubicación:</label>
+            <div id="mapa-modal" style="height: 200px; border-radius: 6px; margin: 8px 0; border: 1px solid #ccc;"></div>
+
+            <!-- Entradas auto-completadas por el mapa -->
+            <div style="display: flex; gap: 8px;">
+                <input type="number" step="any" id="conj-lat" placeholder="Latitud" required readonly style="background: #f1f5f9;">
+                <input type="number" step="any" id="conj-log" placeholder="Longitud" required readonly style="background: #f1f5f9;">
+            </div>
+            
+            <input type="text" id="conj-desc" placeholder="Descripción breve">
+            <select id="conj-usuario" required style="width:100%; padding:12px; margin:8px 0; border:1px solid #ccc; border-radius:5px;">
+                <option value="">Seleccione el Propietario...</option>
+            </select>
+            <button type="submit" class="btn-primary">Guardar Conjunto</button>
+            <button type="button" class="btn-cancel" onclick="cerrarModal('modal-conjunto')">Cancelar</button>
+        </form>
+    </div>
+</div>
+<!-- MODAL: AGREGAR MÁQUINA -->
+<div id="modal-maquina" class="modal-overlay">
+    <div class="modal-content">
+        <h3>Agregar Máquina a este Conjunto</h3>
+        <form id="form-maquina" onsubmit="enviarMaquina(event)">
+            <input type="text" id="maq-id" placeholder="ID (MAC) de la Máquina" required>
+            <input type="text" id="maq-ubicacion" placeholder="Ubicación (Ej. Parqueadero Torre 1)" required>
+            <button type="submit" class="btn-primary">Guardar Máquina</button>
+            <button type="button" class="btn-cancel" onclick="cerrarModal('modal-maquina')">Cancelar</button>
+        </form>
+    </div>
+</div>
+
+<!-- ========================================== -->
+<!-- JAVASCRIPT Y LOGICA DEL DASHBOARD          -->
+<!-- ========================================== -->
+<script>
+    const API_URL = "http://" + window.location.host;
+    let token = localStorage.getItem("token");
+    let conjuntoIdActivo = null;
+
+    if (token) {
+        mostrarDashboard();
+    }
+
+    async function ejecutarLogin() {
+        const email = document.getElementById("email").value;
+        const password = document.getElementById("password").value;
+
+        const formData = new URLSearchParams();
+        formData.append("username", email);
+        formData.append("password", password);
+
+        const res = await fetch(`${API_URL}/api/login`, {
+            method: "POST",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: formData
+        });
+
+        if (res.ok) {
+            const data = await res.json();
+            localStorage.setItem("token", data.access_token);
+            localStorage.setItem("nombre", data.nombre);
+            localStorage.setItem("rol", data.rol);
+            document.getElementById("error-login").style.display = "none";
+            mostrarDashboard();
+        } else {
+            document.getElementById("error-login").style.display = "block";
+        }
+    }
+
+    function mostrarDashboard() {
+        document.getElementById("section-login").classList.add("hidden");
+        document.getElementById("section-dashboard").classList.remove("hidden");
+        
+        document.getElementById("user-title").innerText = `Hola, ${localStorage.getItem("nombre")}`;
+        document.getElementById("user-role").innerText = `Rol: ${localStorage.getItem("rol").toUpperCase()}`;
+        
+        // Habilitar controles si es SuperAdmin
+        const rol = localStorage.getItem("rol") ? localStorage.getItem("rol").toLowerCase() : "";
+        if (rol === "superadmin") {
+            document.body.classList.add("is-superadmin");
+        } else {
+            document.body.classList.remove("is-superadmin");
+        }
+
+        cargarConjuntos();
+    }
+
+    async function cargarConjuntos() {
+        const res = await fetch(`${API_URL}/api/conjuntos`, {
+            headers: { "Authorization": `Bearer ${localStorage.getItem("token")}` }
+        });
+
+        if (res.status === 401) return cerrarSesion();
+
+        const data = await res.json();
+        const tbody = document.getElementById("tabla-conjuntos");
+        tbody.innerHTML = "";
+
+        data.conjuntos.forEach(c => {
+            const tr = document.createElement("tr");
+            tr.onclick = () => cargarMaquinasConjunto(c.id, c.nombre);
+            tr.innerHTML = `
+                <td><b>${c.nombre}</b></td>
+                <td>${c.propietario}</td>
+                <td>${c.descripcion || '-'}</td>
+                <td>$${c.total_recaudado.toLocaleString()}</td>
+                <td>$${c.totalAdmin.toLocaleString()}</td>
+                <td>$${c.totalKael.toLocaleString()}</td>
+            `;
+            tbody.appendChild(tr);
+        });
+    }
+
+    async function cargarMaquinasConjunto(conjuntoId, conjuntoNombre) {
+        conjuntoIdActivo = conjuntoId; // Guardamos ID en caso de que queramos agregar maquina
+
+        const res = await fetch(`${API_URL}/api/conjunto/${conjuntoId}/maquinas`, {
+            headers: { "Authorization": `Bearer ${localStorage.getItem("token")}` }
+        });
+
+        if (!res.ok) return alert("Error al obtener las máquinas");
+
+        const data = await res.json();
+        
+        document.getElementById("vista-conjuntos").classList.add("hidden");
+        document.getElementById("vista-maquinas").classList.remove("hidden");
+        document.getElementById("titulo-conjunto-detalles").innerText = `Máquinas en: ${conjuntoNombre}`;
+
+        const tbody = document.getElementById("tabla-maquinas");
+        tbody.innerHTML = "";
+
+        const esSuperAdmin = localStorage.getItem("rol") && localStorage.getItem("rol").toLowerCase() === "superadmin";
+
+        data.maquinas.forEach(m => {
+            const tr = document.createElement("tr");
+
+            // Botón Desactivar / Activar si es superadmin
+            let tdAcciones = "";
+            if (esSuperAdmin) {
+                const txtBoton = m.estado === "ACTIVA" ? "Desactivar" : "Activar";
+                const colorBtn = m.estado === "ACTIVA" ? "#dc3545" : "#28a745";
+                
+                tdAcciones = `
+                <td class="superadmin-only">
+                    <button style="background: ${colorBtn}; padding: 6px 12px; font-size: 12px; margin: 0;" onclick="desactivarMaquina('${m.id_maquina}')">${txtBoton}</button>
+                </td>`;
+            }
+
+            // Cambiar color de estado si está inactiva
+            const estadoHtml = m.estado === "ACTIVA" 
+                ? `<span style="color: green; font-weight: bold;">ACTIVA</span>`
+                : `<span style="color: red; font-weight: bold;">INACTIVA</span>`;
+
+            tr.innerHTML = `
+                <td><b>${m.id_maquina}</b></td>
+                <td>${m.ubicacion}</td>
+                <td>${estadoHtml}</td>
+                <td>${m.transacciones}</td>
+                <td>$${m.total_recaudado.toLocaleString()}</td>                
+                <td>$${m.totalAdmin.toLocaleString()}</td>
+                <td>$${m.totalKael.toLocaleString()}</td>
+                ${tdAcciones}
+            `;
+            tbody.appendChild(tr);
+        });
+    }
+
+    function volverAConjuntos() {
+        document.getElementById("vista-maquinas").classList.add("hidden");
+        document.getElementById("vista-conjuntos").classList.remove("hidden");
+        conjuntoIdActivo = null;
+    }
+
+    function cerrarSesion() {
+        localStorage.clear();
+        location.reload();
+    }
+
+    /* ========================================== */
+    /* LOGICA DE FORMULARIOS SUPERADMIN           */
+    /* ========================================== */
+
+    function abrirModal(id) { document.getElementById(id).style.display = "flex"; }
+    function cerrarModal(id) { document.getElementById(id).style.display = "none"; }
+
+    let mapa = null;
+let marcador = null;
+
+async function abrirModalConjunto() {
+    abrirModal('modal-conjunto');
+    
+    // Cargar usuarios en el select
+    const res = await fetch(`${API_URL}/api/usuarios`, {
+        headers: { "Authorization": `Bearer ${localStorage.getItem("token")}` }
+    });
+    if (res.ok) {
+        const usuarios = await res.json();
+        const select = document.getElementById("conj-usuario");
+        select.innerHTML = '<option value="">Seleccione el Propietario...</option>';
+        usuarios.forEach(u => {
+            select.innerHTML += `<option value="${u.id}">${u.nombre} (${u.email})</option>`;
+        });
+    }
+
+    // Inicializar mapa si no existe (Coordenadas por defecto: Colombia o Pereira)
+    setTimeout(() => {
+        if (!mapa) {
+            mapa = L.map('mapa-modal').setView([4.813, -75.696], 13);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap'
+            }).addTo(mapa);
+
+            // Escuchar el clic sobre el mapa
+            mapa.on('click', function(e) {
+                const { lat, lng } = e.latlng;
+                
+                // Asignar a los campos de texto
+                document.getElementById("conj-lat").value = lat.toFixed(6);
+                document.getElementById("conj-log").value = lng.toFixed(6);
+
+                // Mover o crear el marcador
+                if (marcador) {
+                    marcador.setLatLng(e.latlng);
+                } else {
+                    marcador = L.marker(e.latlng).addTo(mapa);
+                }
+            });
+        }
+        mapa.invalidateSize(); // Refresca el renderizado del mapa al abrir el modal
+    }, 200);
+}
+
+    async function enviarUsuario(e) {
+        e.preventDefault();
+        const payload = {
+            nombre: document.getElementById("nuevo-nombre").value,
+            email: document.getElementById("nuevo-email").value,
+            password: document.getElementById("nuevo-password").value,
+            telefono: document.getElementById("nuevo-telefono").value,
+            rol: document.getElementById("nuevo-rol").value
+        };
+        const res = await fetch(`${API_URL}/api/usuarios`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json", "Authorization": `Bearer ${localStorage.getItem("token")}` },
+            body: JSON.stringify(payload)
+        });
+        if (res.ok) {
+            alert("Usuario creado correctamente");
+            document.getElementById("form-usuario").reset();
+            cerrarModal("modal-usuario");
+        } else {
+            const data = await res.json();
+            alert("Error: " + data.detail);
+        }
+    }
+
+    async function enviarConjunto(e) {
+        e.preventDefault();
+        
+        // Armamos el paquete de datos capturando los nuevos inputs
+        const payload = {
+            nombre: document.getElementById("conj-nombre").value,
+            descripcion: document.getElementById("conj-desc").value,
+            latitud: parseFloat(document.getElementById("conj-lat").value),  // <-- Captura Latitud
+            longitud: parseFloat(document.getElementById("conj-log").value), // <-- Captura Longitud
+            usuario_id: parseInt(document.getElementById("conj-usuario").value)
+        };
+        
+        const res = await fetch(`${API_URL}/api/conjunto`, {
+            method: "POST",
+            headers: { 
+                "Content-Type": "application/json", 
+                "Authorization": `Bearer ${localStorage.getItem("token")}` 
+            },
+            body: JSON.stringify(payload)
+        });
+        
+        if (res.ok) {
+            alert("Conjunto creado correctamente");
+            document.getElementById("form-conjunto").reset();
+            cerrarModal("modal-conjunto");
+            cargarConjuntos(); 
+        } else {
+            const data = await res.json();
+            alert("Error: " + data.detail);
+        }
+    }
+
+    async function enviarMaquina(e) {
+        e.preventDefault();
+        const payload = {
+            id_maquina: document.getElementById("maq-id").value,
+            ubicacion: document.getElementById("maq-ubicacion").value,
+            conjunto_id: conjuntoIdActivo
+        };
+        const res = await fetch(`${API_URL}/api/maquina`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json", "Authorization": `Bearer ${localStorage.getItem("token")}` },
+            body: JSON.stringify(payload)
+        });
+        if (res.ok) {
+            alert("Máquina agregada correctamente");
+            document.getElementById("form-maquina").reset();
+            cerrarModal("modal-maquina");
+            cargarMaquinasConjunto(conjuntoIdActivo, document.getElementById("titulo-conjunto-detalles").innerText.split(": ")[1]);
+        } else {
+            const data = await res.json();
+            alert("Error: " + data.detail);
+        }
+    }
+
+    async function desactivarMaquina(idMaquina) {
+        if(confirm(`¿Estás seguro que deseas CAMBIAR el estado de la máquina ${idMaquina}?`)) {
+            const res = await fetch(`${API_URL}/api/maquina/${idMaquina}/estado`, {
+                method: "PUT",
+                headers: { "Authorization": `Bearer ${localStorage.getItem("token")}` }
+            });
+            if (res.ok) {
+                // Refrescamos la vista usando las variables globales temporales
+                cargarMaquinasConjunto(conjuntoIdActivo, document.getElementById("titulo-conjunto-detalles").innerText.split(": ")[1]);
+            } else {
+                alert("Error al cambiar el estado");
+            }
+        }
+    }
+</script>
+
+</body>
+</html>

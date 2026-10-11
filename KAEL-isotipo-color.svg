@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="400" height="460" viewBox="160 0 400 460" role="img" aria-labelledby="title desc" color-interpolation="sRGB">
+  <title id="title">KAEL - isotipo a color</title>
+  <desc id="desc">Isotipo independiente, sin letras. Geometría y degradados del SVG mejorado. Fondo transparente.</desc>
+  <defs>
+    <radialGradient id="upright" gradientUnits="userSpaceOnUse" cx="0" cy="0" r="1" gradientTransform="translate(236.8374 326.8525) rotate(9.4647) scale(211.7121 360.3019)">
+      <stop offset="0.000000" stop-color="#029fea" />
+      <stop offset="0.083333" stop-color="#02a3ef" />
+      <stop offset="0.166667" stop-color="#01a7f4" />
+      <stop offset="0.250000" stop-color="#01aaf9" />
+      <stop offset="0.333333" stop-color="#01aefe" />
+      <stop offset="0.416667" stop-color="#01a9fd" />
+      <stop offset="0.500000" stop-color="#019af8" />
+      <stop offset="0.583333" stop-color="#008df1" />
+      <stop offset="0.666667" stop-color="#0181ea" />
+      <stop offset="0.750000" stop-color="#0176e3" />
+      <stop offset="0.833333" stop-color="#006bde" />
+      <stop offset="0.916667" stop-color="#0164da" />
+      <stop offset="1.000000" stop-color="#015cd6" />
+    </radialGradient>
+    <radialGradient id="fold" gradientUnits="userSpaceOnUse" cx="0" cy="0" r="1" gradientTransform="translate(226.2027 346.1270) rotate(-15.4458) scale(114.2361 1099.9542)">
+      <stop offset="0.000000" stop-color="#002276" />
+      <stop offset="0.083333" stop-color="#002376" />
+      <stop offset="0.166667" stop-color="#002478" />
+      <stop offset="0.250000" stop-color="#002477" />
+      <stop offset="0.333333" stop-color="#002478" />
+      <stop offset="0.416667" stop-color="#00277b" />
+      <stop offset="0.500000" stop-color="#00297e" />
+      <stop offset="0.583333" stop-color="#002e85" />
+      <stop offset="0.666667" stop-color="#00348e" />
+      <stop offset="0.750000" stop-color="#003a97" />
+      <stop offset="0.833333" stop-color="#003f9e" />
+      <stop offset="0.916667" stop-color="#0043a4" />
+      <stop offset="1.000000" stop-color="#004aad" />
+    </radialGradient>
+    <radialGradient id="diagonal" gradientUnits="userSpaceOnUse" cx="0" cy="0" r="1" gradientTransform="translate(482.1842 87.6470) rotate(-6.0656) scale(258.9291 368.3423)">
+      <stop offset="0.000000" stop-color="#01aefe" />
+      <stop offset="0.083333" stop-color="#01aefe" />
+      <stop offset="0.166667" stop-color="#01adfe" />
+      <stop offset="0.250000" stop-color="#01a1fa" />
+      <stop offset="0.333333" stop-color="#0093f2" />
+      <stop offset="0.416667" stop-color="#0185ea" />
+      <stop offset="0.500000" stop-color="#0074df" />
+      <stop offset="0.583333" stop-color="#0064d3" />
+      <stop offset="0.666667" stop-color="#0056c7" />
+      <stop offset="0.750000" stop-color="#004cbd" />
+      <stop offset="0.833333" stop-color="#004abc" />
+      <stop offset="0.916667" stop-color="#004bbe" />
+      <stop offset="1.000000" stop-color="#004dc0" />
+    </radialGradient>
+    <radialGradient id="tail" gradientUnits="userSpaceOnUse" cx="0" cy="0" r="1" gradientTransform="translate(389.9971 494.5676) rotate(-31.6853) scale(634.7388 139.4114)">
+      <stop offset="0.000000" stop-color="#01acff" />
+      <stop offset="0.083333" stop-color="#019af7" />
+      <stop offset="0.166667" stop-color="#0188ec" />
+      <stop offset="0.250000" stop-color="#0076e1" />
+      <stop offset="0.333333" stop-color="#006bd9" />
+      <stop offset="0.416667" stop-color="#0060ce" />
+      <stop offset="0.500000" stop-color="#0050bf" />
+      <stop offset="0.583333" stop-color="#0041ad" />
+      <stop offset="0.666667" stop-color="#0039a0" />
+      <stop offset="0.750000" stop-color="#013293" />
+      <stop offset="0.833333" stop-color="#012c86" />
+      <stop offset="0.916667" stop-color="#012579" />
+      <stop offset="1.000000" stop-color="#021f6c" />
+    </radialGradient>
+    <radialGradient id="yellow" gradientUnits="userSpaceOnUse" cx="0" cy="0" r="1" gradientTransform="translate(249.3576 684.7272) rotate(25.6135) scale(304.9660 669.3525)">
+      <stop offset="0.000000" stop-color="#ffc800" />
+      <stop offset="0.083333" stop-color="#feca00" />
+      <stop offset="0.166667" stop-color="#fecb00" />
+      <stop offset="0.250000" stop-color="#fecd00" />
+      <stop offset="0.333333" stop-color="#fece00" />
+      <stop offset="0.416667" stop-color="#fecf01" />
+      <stop offset="0.500000" stop-color="#fdd101" />
+      <stop offset="0.583333" stop-color="#fecc02" />
+      <stop offset="0.666667" stop-color="#fdba03" />
+      <stop offset="0.750000" stop-color="#efa10c" />
+      <stop offset="0.833333" stop-color="#e18c10" />
+      <stop offset="0.916667" stop-color="#d07c15" />
+      <stop offset="1.000000" stop-color="#c06d1a" />
+    </radialGradient>
+    <path id="isotype-outline" d="M227.746 7.465C249.808 3.763 274.073 10.283 288.362 27.213C295.042 35.126 299.542 45.313 300.942 55.596C301.838 62.177 301.464 68.796 301.357 75.464C301.25 82.129 301.409 88.842 301.477 95.52C301.617 109.209 301.375 122.751 301.344 136.504C301.329 143.213 301.364 149.972 301.396 156.426L301.45 174.5L325.665 153.552C332.884 147.468 340.24 140.87 347.538 134.457C361.937 121.804 376.111 109.872 390.317 96.982C405.025 83.637 419.769 69.265 438.284 63.448C458.732 57.025 483.78 61.036 499.684 75.51C507.186 82.339 512.653 91.495 515.35 101.458C518.399 112.722 517.907 125.017 513.65 135.63C510.002 144.725 503.589 152.584 496.341 159.416C489.268 166.083 481.398 171.773 473.678 177.645C458.559 189.145 444.013 201.346 429.4 213.48C399.749 238.101 369.823 262.445 340.473 287.403C333.173 293.611 325.908 299.857 318.565 306.064C311.282 312.22 303.922 318.338 296.713 324.264C291.732 328.359 287.055 331.551 282 333C288.42 332.78 294.518 331.554 300.676 330.123C310.462 327.848 320.476 323.708 330.112 319.313C348.416 310.962 365.354 301.686 383.328 292.398C402.912 282.279 423.726 272.146 445.159 275.488C455.511 277.102 466.007 281.86 474.127 288.59C481.405 294.622 486.773 302.238 492.365 309.849C498.166 317.744 504.208 325.633 509.979 333.532C515.606 341.235 520.975 348.946 526.795 356.568C532.822 364.461 539.331 372.259 542.616 381.459C546.512 392.372 545.871 405.258 541.257 415.919C533.18 434.58 512.928 446.423 492.341 448.453C480.661 449.605 468.872 447.598 458.596 442.431C450.278 438.25 442.951 431.998 436.359 425.188C429.583 418.187 423.585 410.596 417.137 403.354C410.832 396.273 404.098 389.526 397.692 382.555L389.1 373.9C384.014 376.67 378.661 378.844 373.469 381.859C365.018 386.767 356.734 391.719 348.422 396.62C331.489 406.602 314.442 416.367 297.518 426.616C288.79 431.901 280.095 437.315 270.512 440.54C259.057 444.394 246.333 445.122 234.469 442.76C224.212 440.718 214.597 436.367 205.822 430.457C197.901 425.122 190.664 418.516 185.312 410.74C179.389 402.133 175.776 392.093 173.961 381.815C171.691 368.961 172.235 355.735 172.522 342.546C173.091 316.446 172.656 290.49 172.48 264.499C172.138 214.217 172.761 163.81 172.606 113.489C172.564 99.826 172.465 86.169 172.623 72.508C172.697 66.138 172.826 59.768 174.322 53.587C175.517 48.653 177.583 43.839 180.163 39.412C190.225 22.148 208.114 10.759 227.746 7.465Z" />
+    <clipPath id="isotype-clip" clipPathUnits="userSpaceOnUse">
+      <use xlink:href="#isotype-outline" />
+    </clipPath>
+  </defs>
+  <g id="isotipo" clip-path="url(#isotype-clip)">
+    <path id="cinta-diagonal" d="M160 0H560V460H160Z" fill="url(#diagonal)" />
+    <path id="extremo-azul-inferior" d="M378 340H560V461H378Z" fill="url(#tail)" />
+    <path id="pliegue-azul" d="M170 165H301.55V336H170Z" fill="url(#fold)" />
+    <path id="cinta-vertical" d="M170 0H301.55V174.5L201.2 263.5C184 282 173 306 171 337H160V0ZM160 260H194V337H160Z" fill="url(#upright)" />
+    <path id="cinta-amarilla" d="M201.2 263.5C196.5 269.3 195.18 276.67 195.261 282.518C195.405 287.601 197.049 292.891 199.512 297.551C203.692 305.46 210.231 311.553 217.545 316.555C234.918 328.434 256.668 334.155 277.523 333.298C279.056 333.235 280.526 333.134 282 333L301 328L335 313L414 272L446 270L482 288L539 361L550 385L533.8 366C528.9 359.6 522.51 354.36 514.77 350.563C505.46 345.576 494.825 343.339 484.361 342.9C462.792 341.995 441.948 348.728 422.154 357.344C404.728 364.928 388.116 373.972 371.599 383.227L371 388L280 451L160 451L160 334H172.65C172.83 330.05 173.3 326.39 173.751 322.52C174.864 311.843 176.912 301.082 181.325 291.61C183.22 287.545 185.549 283.717 188.121 279.538C192.3 272.8 196.3 267.6 201.2 263.5Z" fill="url(#yellow)" />
+  </g>
+</svg>

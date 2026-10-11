@@ -1,0 +1,10 @@
+body { font-family: Arial, sans-serif; background-color: #f4f6f9; margin: 0; color: #333; }
+.navbar { background: #1e293b; color: white; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; }
+.navbar button { background: #ef4444; border: none; color: white; padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer; }
+.container { padding: 2rem; max-width: 1200px; margin: auto; }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-top: 1rem; }
+.card { background: white; padding: 1.5rem; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); transition: transform 0.2s; }
+.card.clickable { cursor: pointer; border-left: 5px solid #3b82f6; }
+.card.clickable:hover { transform: translateY(-3px); }
+.error { color: #ef4444; font-weight: bold; }
+.btn-back { background: #64748b; color: white; border: none; padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer; margin-bottom: 1rem; }
